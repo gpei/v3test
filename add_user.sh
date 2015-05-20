@@ -21,5 +21,14 @@ do
 done
 }
 
+allocate_project()
+{
+for i in `seq ${start_num} ${end_num}`
+do
+  osadm new-project project$i --admin=test$i
+done
+}
+
 add_user
 initialize_user
+allocate_project
