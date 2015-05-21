@@ -14,10 +14,10 @@ date_process()
     then
       echo "The $i sti build failed!!" >> record/build$num
     else
-      time1=$(osc build-logs -n project$i ruby-hello-world-1 | sed -n '1p' |awk '{print $1}')   
+      time1=$(osc build-logs -n project$i $build_config-1 | sed -n '1p' |awk '{print $1}')   
       time1=$(date +%s -d $time1)
     
-      time2=$(osc build-logs -n project$i ruby-hello-world-1 | sed -n '$p' |awk '{print $1}')
+      time2=$(osc build-logs -n project$i $build_config-1 | sed -n '$p' |awk '{print $1}')
       time2=$(date +%s -d $time2)
   
       time=$(($time2-$time1))
@@ -161,18 +161,17 @@ for num in 3 8 ; do
   sleep 60
  
 
-
-  #once building finished, do the following steps
-    if [ $fail = "true" ]
-    then
-      echo "There's build failed, pls check!!"
-      break
-    else
-      clean_projects
-      clean_images
-    fi
- 
   date_process
+  #once building finished, do the following steps
+  if [ $fail = "true" ]
+  then
+    echo "There's build failed, pls check!!"
+    break
+  else
+    clean_projects
+    clean_images
+  fi
+ 
   sleep 300
 done
 
