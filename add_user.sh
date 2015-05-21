@@ -17,6 +17,7 @@ initialize_user()
 {
 for i in `seq ${start_num} ${end_num}`
 do
+  su - test$i -c "rm -f ~/.config/openshift/.config"
   su - test$i -c "osc login -u test$i -p redhat --certificate-authority=/var/lib/openshift/openshift.local.certificates/ca/cert.crt --server=https://${master_hostname}:8443"
 done
 }

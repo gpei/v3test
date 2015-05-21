@@ -2,7 +2,7 @@
 
 image_source="openshift/ruby-20-rhel7~https://github.com/gpei/ruby-hello-world.git"
 build_config="ruby-hello-world"
-
+fail="false"
 
 date_process()
 {
@@ -20,7 +20,7 @@ date_process()
       time2=$(osc build-logs -n project$i ruby-hello-world-1 | sed -n '$p' |awk '{print $1}')
       time2=$(date +%s -d $time2)
   
-      time=$($time2-$time1)
+      time=$(($time2-$time1))
 
       echo "$i sti build cost:"  >> record/build$num
       echo "$time seconds"  >> record/build$num
@@ -33,9 +33,9 @@ generate_avg()
 {
   for i in $(cat test_cal)
   do
-    success_num=$(cat record/build$num | grep seconds | wc -l)
-    echo "There's $success_num sti build succeed during $i build testing, the avg time of the $success_num build is: " > test_result
-    cat record/build$num | grep seconds | awk '{sum+=$1}END{print sum/NR}'  >> test_result
+    success_num=$(cat record/build$i | grep seconds | wc -l)
+    echo "There's $success_num sti build succeed during $i build testing, the avg time of the $success_num build is: " >> test_result
+    cat record/build$i | grep seconds | awk '{sum+=$1}END{print sum/NR}'  >> test_result
   done
 }
 
@@ -63,11 +63,26 @@ clean_projects()
   echo "All projects cleaned up!!!"
 }
 
+clean_images()
+{
+  for i in `seq 1 $num`
+  do
+    list=$(docker images|grep project$i|awk '{print $2}')
+    for id in $list
+    do
+      docker rmi -f $id
+    done
+  done
+  
+  echo "All images cleaned up!!!"
+}
+
 create_app()
 {
 
 for i in `seq 1 $num`
 do
+  osadm new-project project$i --admin=test$i
   su - test$i -c "osc new-app $image_source  -n project$i"
 done
 
@@ -83,15 +98,55 @@ trigger_build()
   done
 }
 
+building_check()
+{
+  while true
+  do
+
+    for i in `seq 1 $num`
+    do
+      str2=$( osc get build -n project$i |grep -e Running -e Pending)
+      str3=$( osc get build -n project$i |grep Failed)
+
+      if [ -z "$str2" ]
+      then
+        flag="true"
+      else
+        flag="false"
+        break
+      fi
+
+      if [ -z "$str3" ]
+      then
+        fail="false"
+      else
+        fail="true"
+      fi
+
+    done
+
+    if [ $flag = "true" ]
+    then
+      echo "All building finished."
+      break
+    else
+      echo "Still have building running..."
+      sleep 10
+    fi
+
+  done
+}
+
+
 #generate is for openshift project
 #osc create -f image-streams.json -n openshift
 
 [ -d ./record ] || mkdir ./record
 
-for num in 5 ; do
+for num in 3 8 ; do
   echo "**********Test Result***************">> record/build$num
   echo $num >> test_cal
-  echo "Ready for creating $num app"
+  echo "Creating $num app"
 
   create_app
 
@@ -99,12 +154,26 @@ for num in 5 ; do
   sleep 60
 
   trigger_build
+  sleep 300
 
-
-  date_process
-  clean_projects
-  clean_images
+  #wait for the building finished
+  building_check 
   sleep 60
+ 
+
+
+  #once building finished, do the following steps
+    if [ $fail = "true" ]
+    then
+      echo "There's build failed, pls check!!"
+      break
+    else
+      clean_projects
+      clean_images
+    fi
+ 
+  date_process
+  sleep 300
 done
 
 generate_avg
