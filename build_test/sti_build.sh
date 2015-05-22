@@ -108,19 +108,19 @@ building_check()
       str2=$( osc get build -n project$i |grep -e Running -e Pending)
       str3=$( osc get build -n project$i |grep Failed)
 
+      if [ -z "$str3" ]
+      then
+        fail="false"
+      else
+        fail="true"
+      fi
+
       if [ -z "$str2" ]
       then
         flag="true"
       else
         flag="false"
         break
-      fi
-
-      if [ -z "$str3" ]
-      then
-        fail="false"
-      else
-        fail="true"
       fi
 
     done
