@@ -114,7 +114,7 @@ generate_avg()
 
 [ -d ./record ] || mkdir ./record
 
-for num in 11 21 ; do
+for num in 11 21 31; do
   echo "**********Test Result***************">> record/rc$num
   echo $num >> test_cal
 
