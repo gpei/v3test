@@ -61,7 +61,7 @@ pod_check()
 
 date_process()
 {
-    pod_list=$(osc get pod -n project1 |grep $build_config|grep -v sti-build|awk '{print $1}')
+    pod_list=$(osc get pod -n project1 |grep $build_config|grep -v sti-build|grep -v $origin_pod| awk '{print $1}')
 
     for i in $pod_list
     do  
@@ -104,7 +104,8 @@ generate_avg()
 {
   for i in $(cat test_cal)
   do
-    echo "The avg time of get $i rc number is: " >> test_result
+    r=$(( $i - 1 ))
+    echo "The avg time of get $r more pod is: " >> test_result
     cat record/rc$i | grep seconds | awk '{sum+=$1}END{print sum/NR}'  >> test_result
   done
 }
@@ -122,6 +123,9 @@ for num in 11 21 ; do
   su - test1 -c "osc start-build $build_config -n project1"
   sleep 90
   build_check 
+
+  origin_pod=$(osc get pod -n project1 |grep $build_config|grep -v sti-build|awk '{print $1}')
+
   echo "Ready to scale the app to $num pod"
 
   scale_app
