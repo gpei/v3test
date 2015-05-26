@@ -13,6 +13,7 @@ date_process()
     if [ -z "$str1" ]
     then
       echo "The $i sti build failed!!" >> record/build$num
+      fail="true"
     else
       time1=$(osc build-logs -n project$i $build_config-1 | sed -n '1p' |awk '{print $1}')   
       time1=$(date +%s -d $time1)
@@ -163,6 +164,7 @@ for num in 3 8 ; do
 
   date_process
   #once building finished, do the following steps
+
   if [ $fail = "true" ]
   then
     echo "There's build failed, pls check!!"
@@ -177,4 +179,3 @@ done
 
 generate_avg
 echo "Check test_result file for the final test result"
-

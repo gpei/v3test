@@ -30,6 +30,6 @@ do
 done
 }
 
-#add_user
+add_user
 initialize_user
 #allocate_project
