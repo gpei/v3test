@@ -1,85 +1,14 @@
 #!/bin/bash
-
-image_source="openshift/ruby-20-rhel7~https://github.com/gpei/ruby-hello-world.git"
-build_config="ruby-hello-world"
-fail="false"
-
-
-scale_app()
-{
-  osc get rc -o json -n project1 > rc.json
-  sed -i '0,/\"replicas\"\:\ 1/s//\"replicas\"\:\ '$num'/' rc.json
-  osc update -f rc.json -n project1
-}
-
-build_check()
-{
-  while true
-  do
-    
-    str1=$( osc get build -n project1 |grep Complete)
-    
-    if [ -z "$str1" ]
-    then
-      echo "still in building, pls wait..."
-      sleep 30
-    else
-      break
-    fi
-  done
-
-}
-
-
-pod_check()
-{
-  while true
-  do
-
-    r_pod=$(osc get pod -n project1 |grep Running|wc -l )
-    str=$( osc get pod -n project1 |grep -i Failed)
-
-    if [ -z "$str" ]
-    then
-      fail="false"
-    else
-      fail="true"
-    fi
-
-    if [ $r_pod -eq $num ]
-    then
-      echo "All $num pod are running now!"
-      break
-    else
-      echo "Some pods still not get running..."
-      sleep 5
-    fi
-    
-  done
-}
-
-
-date_process()
-{
-    pod_list=$(osc get pod -n project1 |grep $build_config|grep -v sti-build|grep -v $origin_pod| awk '{print $1}')
-
-    for i in $pod_list
-    do  
-      time=$(osc log $i -n project1 |sed -n '$p'|awk '{print $1}')
-      e_time=$(date +%s -d $time)
-  
-      cost_time=$(($e_time-$s_time))
-  
-      echo "The cost time of pod $i is:" >> record/rc$num
-      echo "$cost_time seconds" >> record/rc$num
-    done
-}
+app_json_file="hello-pod.json"
 
 
 clean_env()
 {
-  osc delete project project1
-  
+  for i in `seq 1 $num`
+  do
+    osc delete project project$i
+  done
+
   while true
   do
     sleep 10
@@ -94,8 +23,7 @@ clean_env()
 
   done
 
-  image=$( docker images|grep project1 |awk '{print $2}' )
-  docker rmi -f $image
+  echo "All projects cleaned up!!!"
 
 }
 
@@ -104,10 +32,63 @@ generate_avg()
 {
   for i in $(cat test_cal)
   do
-    r=$(( $i - 1 ))
-    echo "The avg time of get $r more pod is: " >> test_result
-    cat record/rc$i | grep seconds | awk '{sum+=$1}END{print sum/NR}'  >> test_result
+    echo "The avg time of get $i app is: " >> test_result
+    cat record/app$i | grep seconds | awk '{sum+=$1}END{print sum/NR}'  >> test_result
   done
+}
+#--------------------------------------------------------------------------------------------
+
+pre_create()
+{
+for i in `seq 1 $num`
+do
+  osadm new-project project$i --admin=test$i
+done
+}
+
+app_create()
+{
+  for i in `seq 1 $num`
+  do
+    su - test$i -c "osc create -f $app_json_file -n project$i"  &
+    get_time &
+  done
+
+}
+
+get_time()
+{
+  start=$(date +%s.%N)
+  while true
+  do
+    str=$(osc get pod -n project$i|grep Running)
+  
+    if [ -z "$str" ]
+    then
+      usleep 1
+    else
+      end=$(date +%s.%N)
+      time_process $start $end
+      break
+    fi
+
+  done
+
+}
+
+time_process()
+{
+    start=$1
+    end=$2
+
+    start_s=$(echo $start | cut -d '.' -f 1)
+    start_ns=$(echo $start | cut -d '.' -f 2)
+    end_s=$(echo $end | cut -d '.' -f 1)
+    end_ns=$(echo $end | cut -d '.' -f 2)
+
+    time=$(( ( 10#$end_s - 10#$start_s ) * 1000 + ( 10#$end_ns / 1000000 - 10#$start_ns / 1000000 ) ))
+    echo "The cost time of $i app is:" >> record/app$num
+    echo "$time ms"  >> record/app$num
 }
 
 
@@ -115,25 +96,15 @@ generate_avg()
 [ -d ./record ] || mkdir ./record
 
 for num in 11 21 ; do
-  echo "**********Test Result***************">> record/rc$num
+  echo "**********Test Result***************">> record/app$num
   echo $num >> test_cal
 
-  osadm new-project project1 --admin=test1
-  su - test1 -c "osc new-app $image_source -n project1"
-  su - test1 -c "osc start-build $build_config -n project1"
   sleep 90
-  build_check 
 
-  origin_pod=$(osc get pod -n project1 |grep $build_config|grep -v sti-build|awk '{print $1}')
+  pre_create
 
-  echo "Ready to scale the app to $num pod"
+  app_create
 
-  scale_app
-  s_time=`date +%s`
-
-  pod_check
-
-  date_process
   
   if [ $fail = "true" ]
   then
@@ -141,7 +112,9 @@ for num in 11 21 ; do
     break
   fi
 
-#  clean_env
+  clean_env
+
+
   sleep 300
 done
 
