@@ -80,7 +80,7 @@ get_time()
   
     if [ -z "$str" ]
     then
-      usleep 100
+      usleep 50
     else
       end=$(date +%s.%N)
       echo "The complete time of $seq app is $end" >>  record/app$num
@@ -94,7 +94,7 @@ get_time()
 time_process()
 {
   start=$(grep beginning record/app$num |awk '{print $5}')
-
+  ms_start=
   for i in `seq 1 $num`
   do
     str=$( grep "$i app" record/app$num |awk '{print $8}')
@@ -109,8 +109,14 @@ time_process()
       start_ns=$(echo $start | cut -d '.' -f 2)
       end_s=$(echo $end | cut -d '.' -f 1)
       end_ns=$(echo $end | cut -d '.' -f 2)
+      
+      start_ms=$(echo "$start_ns" |sed 's/./ /4g')
+      end_ms=$(echo "$end_ns" |sed 's/./ /4g')
 
-      time=$(( ( 10#$end_s - 10#$start_s ) * 1000 + ( 10#$end_ns / 1000000 - 10#$start_ns / 1000000 ) ))
+
+      start_time=$(($start_s*1000+$start_ms))
+      end_time=$(($end_s*1000+$end_ms))
+      time=$(($end_time-$start_time))
       echo "The cost time of $i app is $time ms" >> record/app$num
     fi
 
@@ -122,7 +128,7 @@ time_process()
 
 [ -d ./record ] || mkdir ./record
 
-for num in 5 10 15 20; do
+for num in 20; do
   clean_env
   echo "**********Test Result***************">> record/app$num
   echo $num >> test_cal
