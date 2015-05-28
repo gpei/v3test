@@ -32,8 +32,9 @@ generate_avg()
 {
   for i in $(cat test_cal)
   do
-    echo "The avg time of get $i app is: " >> test_result
-    cat record/app$i | grep seconds | awk '{sum+=$1}END{print sum/NR}'  >> test_result
+    real_num=$(grep ms record/app$i |wc -l)
+    echo "The avg time of get $i app(success app num $real_num) is: " >> test_result
+    cat record/app$i | grep ms | awk '{sum+=$8}END{print sum/NR}'  >> test_result
   done
 }
 #--------------------------------------------------------------------------------------------
@@ -44,6 +45,8 @@ for i in `seq 1 $num`
 do
   osadm new-project project$i --admin=test$i
   cp -f hello-pod.json /home/test$i/
+  port=$((6000+$i ))
+  sed -i 's/6061/'$port'/' /home/test$i/hello-pod.json
 done
 }
 
@@ -77,10 +80,10 @@ get_time()
   
     if [ -z "$str" ]
     then
-      sleep 1
+      usleep 100
     else
       end=$(date +%s.%N)
-      echo "the end time of $seq app is $end" >>  record/app$num
+      echo "The complete time of $seq app is $end" >>  record/app$num
       break
     fi
 
@@ -98,7 +101,7 @@ time_process()
     
     if [ -z "$str" ]
     then
-      echo "The $i app is not created successfully!"
+      echo "The $i app is not created successfully!" >>  record/app$num
     else
       end=$str
 
@@ -108,9 +111,10 @@ time_process()
       end_ns=$(echo $end | cut -d '.' -f 2)
 
       time=$(( ( 10#$end_s - 10#$start_s ) * 1000 + ( 10#$end_ns / 1000000 - 10#$start_ns / 1000000 ) ))
-      echo "The cost time of $seq app is $time ms" >> record/app$num
+      echo "The cost time of $i app is $time ms" >> record/app$num
     fi
 
+   sleep 1
    done
 }
 
@@ -118,7 +122,8 @@ time_process()
 
 [ -d ./record ] || mkdir ./record
 
-for num in 3 ; do
+for num in 5 10 15 20; do
+  clean_env
   echo "**********Test Result***************">> record/app$num
   echo $num >> test_cal
 
@@ -138,8 +143,8 @@ for num in 3 ; do
 
   sleep 300
   time_process
-#  clean_env
+  sleep 60
 done
 
-#generate_avg
+generate_avg
 echo "Check test_result file for the final test result"
