@@ -31,7 +31,7 @@ date_process()
        
       #check whether the deployment is success
       pod=$(osc get pod -n project$i |grep $build_config| grep -v sti-build|awk '{print $1}')
-      str2=$(osc log $pod -n project1 |sed -n '$p'|grep start)
+      str2=$(osc log $pod -n project$i |sed -n '$p'|grep start)
   
       if [ -z "$str2" ]
       then
@@ -39,7 +39,7 @@ date_process()
         fail="true"
       else
 
-        time3=$(osc log $i -n project1 |sed -n '$p'|awk '{print $1}')
+        time3=$(osc log $pod -n project$i |sed -n '$p'|awk '{print $1}')
         time3=$(date +%s -d $time3)
         
         d_time=$(($time3-$time2))
