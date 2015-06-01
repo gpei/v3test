@@ -94,7 +94,6 @@ get_time()
 time_process()
 {
   start=$(grep beginning record/app$num |awk '{print $5}')
-  ms_start=
   for i in `seq 1 $num`
   do
     str=$( grep "$i app" record/app$num |awk '{print $8}')
@@ -128,7 +127,7 @@ time_process()
 
 [ -d ./record ] || mkdir ./record
 
-for num in 20; do
+for num in 10; do
   clean_env
   echo "**********Test Result***************">> record/app$num
   echo $num >> test_cal
