@@ -7,6 +7,10 @@ fail="false"
 
 scale_app()
 {
+  
+  # for beta4, we could use osc resize/scale cmd
+  # osc resize --replicas=$num replicationcontrollers $build_config-1
+
   osc get rc -o json -n project1 > rc.json
   sed -i '0,/\"replicas\"\:\ 1/s//\"replicas\"\:\ '$num'/' rc.json
   osc update -f rc.json -n project1
