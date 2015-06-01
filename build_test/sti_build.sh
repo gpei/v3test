@@ -172,7 +172,7 @@ pod_check()
 
     for i in `seq 1 $num`
     do
-      status=$( osc get pod -n project$i|grep $build_config |grep -v sti-build |grep -v deployment|awk 'print $7')
+      status=$( osc get pod -n project$i|grep $build_config |grep -v sti-build |grep -v deployment|awk '{print $7}')
 
 
       if [ $status = "Running" ]
@@ -180,6 +180,7 @@ pod_check()
         let r_pod+=1
       elif [ $status = "Failed" ]
       then
+        fail="true"
         let r_pod+=1
       fi
  
@@ -203,7 +204,7 @@ pod_check()
 
 [ -d ./record ] || mkdir ./record
 
-for num in 3 8 ; do
+for num in 3 ; do
   echo "**********Test Result***************">> record/build$num
   echo $num >> test_cal
   echo "Creating $num app"
