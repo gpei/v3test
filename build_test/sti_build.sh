@@ -31,7 +31,7 @@ date_process()
        
       #check whether the deployment is success
       pod=$(osc get pod -n project$i |grep $build_config| grep -v sti-build|awk '{print $1}')
-      str2=$(osc log $i -n project1 |sed -n '$p'|grep start)
+      str2=$(osc log $pod -n project1 |sed -n '$p'|grep start)
   
       if [ -z "$str2" ]
       then
@@ -172,7 +172,7 @@ pod_check()
 
     for i in `seq 1 $num`
     do
-      status=$( osc get pod -n project$i|grep $build_config |grep -v sti-build |grep -v deployment|awk '{print $7}')
+      status=$( osc get pod -n project$i|grep $build_config |grep -v sti-build |grep -v ose-deployer|awk '{print $7}')
 
 
       if [ $status = "Running" ]
