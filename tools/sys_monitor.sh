@@ -15,6 +15,7 @@ do
 
   echo
   echo "***** System process status record *****"
-  ps auxw|egrep '/usr/bin/openshift | systemd-journal | /usr/bin/docker'|grep -v grep
+  ps auxw|egrep '/usr/bin/openshift | /usr/bin/docker'|grep -v grep
+  echo
 
 done
