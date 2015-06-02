@@ -104,18 +104,13 @@ time_process()
     else
       end=$str
 
-      start_s=$(echo $start | cut -d '.' -f 1)
-      start_ns=$(echo $start | cut -d '.' -f 2)
-      end_s=$(echo $end | cut -d '.' -f 1)
-      end_ns=$(echo $end | cut -d '.' -f 2)
-      
-      start_ms=$(echo "$start_ns" |sed 's/./ /4g')
-      end_ms=$(echo "$end_ns" |sed 's/./ /4g')
+      start_ms=$(echo "$start*1000" |bc) 
+      start_ms=$(echo "$start_ms" |sed 's/./ /14g')
 
+      end_ms=$(echo "$end*1000" |bc) 
+      end_ms=$(echo "$end_ms" |sed 's/./ /14g')
 
-      start_time=$(($start_s*1000+$start_ms))
-      end_time=$(($end_s*1000+$end_ms))
-      time=$(($end_time-$start_time))
+      time=$(($end_ms-$start_ms))
       echo "The cost time of $i app is $time ms" >> record/app$num
     fi
 
