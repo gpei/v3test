@@ -1,7 +1,10 @@
 #!/bin/bash
 
-image_source="openshift/ruby-20-rhel7~https://github.com/gpei/ruby-hello-world.git"
-build_config="ruby-hello-world"
+template="ruby-helloworld-sample"
+tem_file="application-template-stibuild.json"
+#bxuild_config="ruby-sample-build"
+frontend_name="frontend-1"
+rc_name="frontend-1"
 fail="false"
 
 
@@ -9,11 +12,11 @@ scale_app()
 {
   
   # for beta4, we could use osc resize/scale cmd
-  # osc resize --replicas=$num replicationcontrollers $build_config-1
+   osc resize --replicas=$num replicationcontrollers $rc_name -n project1
 
-  osc get rc -o json -n project1 > rc.json
-  sed -i '0,/\"replicas\"\:\ 1/s//\"replicas\"\:\ '$num'/' rc.json
-  osc update -f rc.json -n project1
+#  osc get rc -o json -n project1 > rc.json
+#  sed -i '0,/\"replicas\"\:\ 1/s//\"replicas\"\:\ '$num'/' rc.json
+#  osc update -f rc.json -n project1
 }
 
 build_check()
@@ -40,8 +43,9 @@ pod_check()
   while true
   do
 
-    r_pod=$(osc get pod -n project1 |grep Running|wc -l )
-    str=$( osc get pod -n project1 |grep -i Failed)
+    r_pod=$(osc get pod -n project1 |grep $frontend_name |grep -v hook|grep Running|wc -l )
+    str=$(osc get pod -n project1 |grep $frontend_name |grep -v hook| grep -i Failed)
+    noready=$(osc get pod -n project1 |grep "not ready")
 
     if [ -z "$str" ]
     then
@@ -52,8 +56,14 @@ pod_check()
 
     if [ $r_pod -eq $num ]
     then
-      echo "All $num pod are running now!"
-      break
+      if [ -z "$noready" ]
+      then
+         echo "All $num pod are running now!"
+         break
+      else
+         echo "some pod still not ready..."
+         sleep 5
+      fi 
     else
       echo "Some pods still not get running..."
       sleep 5
@@ -65,11 +75,11 @@ pod_check()
 
 date_process()
 {
-    pod_list=$(osc get pod -n project1 |grep $build_config|grep -v sti-build|grep -v $origin_pod| awk '{print $1}')
+    pod_list=$(osc get pod -n project1 |grep $frontend_name |grep -v hook|grep -v $origin_pod| awk '{print $1}')
 
     for i in $pod_list
     do  
-      time=$(osc log $i -n project1 |sed -n '$p'|awk '{print $1}')
+      time=$(osc logs $i -n project1 |sed -n '$p'|awk '{print $1,$2}' |cut -c 2-20)
       e_time=$(date +%s -d $time)
   
       cost_time=$(($e_time-$s_time))
@@ -98,8 +108,8 @@ clean_env()
 
   done
 
-  image=$( docker images|grep project1 |awk '{print $2}' )
-  docker rmi -f $image
+#  image=$( docker images|grep project1 |awk '{print $2}' )
+#  docker rmi -f $image
 
 }
 
@@ -123,12 +133,14 @@ for num in 11 21 31; do
   echo $num >> test_cal
 
   osadm new-project project1 --admin=test1
-  su - test1 -c "osc new-app $image_source -n project1"
-  su - test1 -c "osc start-build $build_config -n project1"
-  sleep 90
+  cp -f $tem_file /home/test$i/
+  su - test1 -c "osc create -f $tem_file -n project1"
+  su - test1 -c "osc new-app --template=$template -n project1"
+#  su - test1 -c "osc start-build $build_config -n project1"
+  sleep 300
   build_check 
 
-  origin_pod=$(osc get pod -n project1 |grep $build_config|grep -v sti-build|awk '{print $1}')
+  origin_pod=$(osc get pod -n project1 |grep $frontend_name |grep -v hook |awk '{print $1}')
 
   echo "Ready to scale the app to $num pod"
 
