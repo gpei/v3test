@@ -2,14 +2,14 @@
 
 master_hostname=`hostname`
 start_num=1
-end_num=100
+end_num=10
 
 add_user()
 {
 for i in `seq ${start_num} ${end_num}`
 do
  useradd test$i
- htpasswd -b /etc/openshift-passwd test$i redhat
+ htpasswd -b /etc/openshift/htpasswd test$i redhat
 done
 }
 
@@ -30,6 +30,6 @@ do
 done
 }
 
-#add_user
+add_user
 initialize_user
 #allocate_project

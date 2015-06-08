@@ -3,7 +3,7 @@
 template="ruby-helloworld-sample"
 tem_file="application-template-stibuild.json"
 #bxuild_config="ruby-sample-build"
-frontend_name="frontend-1"
+frontend_name="frontend"
 rc_name="frontend-1"
 fail="false"
 
@@ -80,7 +80,7 @@ date_process()
     for i in $pod_list
     do  
       time=$(osc logs $i -n project1 |sed -n '$p'|awk '{print $1,$2}' |cut -c 2-20)
-      e_time=$(date +%s -d $time)
+      e_time=$(date +%s -d "$time")
   
       cost_time=$(($e_time-$s_time))
   
@@ -128,12 +128,12 @@ generate_avg()
 
 [ -d ./record ] || mkdir ./record
 
-for num in 11 21 31; do
+for num in 11 ; do
   echo "**********Test Result***************">> record/rc$num
   echo $num >> test_cal
 
   osadm new-project project1 --admin=test1
-  cp -f $tem_file /home/test$i/
+  cp -f $tem_file /home/test1/
   su - test1 -c "osc create -f $tem_file -n project1"
   su - test1 -c "osc new-app --template=$template -n project1"
 #  su - test1 -c "osc start-build $build_config -n project1"
@@ -157,8 +157,8 @@ for num in 11 21 31; do
     break
   fi
 
-  clean_env
-  sleep 300
+#  clean_env
+#  sleep 300
 done
 
 generate_avg

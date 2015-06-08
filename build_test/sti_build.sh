@@ -1,8 +1,12 @@
 #!/bin/bash
 
-image_source="openshift/ruby-20-rhel7~https://github.com/gpei/ruby-hello-world.git"
-build_config="ruby-hello-world"
+template="ruby-helloworld-sample"
+tem_file="application-template-stibuild.json"
+build_config="ruby-sample-build"
+frontend_name="frontend"
+rc_name="frontend-1"
 fail="false"
+
 
 date_process()
 {
@@ -18,10 +22,10 @@ date_process()
     else
       
       #get the start time and end time of sti build from build log of each build
-      time1=$(osc build-logs -n project$i $build_config-1 | sed -n '1p' |awk '{print $1}')   
+      time1=$(osc build-logs -n project$i $build_config-1 | sed -n '1p' |awk '{print $2}')   
       time1=$(date +%s -d $time1)
     
-      time2=$(osc build-logs -n project$i $build_config-1 | sed -n '$p' |awk '{print $1}')
+      time2=$(osc build-logs -n project$i $build_config-1 | sed -n '$p' |awk '{print $2}')
       time2=$(date +%s -d $time2)
   
       b_time=$(($time2-$time1))
@@ -30,8 +34,8 @@ date_process()
       echo "$b_time seconds"  >> record/build$num
        
       #check whether the deployment is success
-      pod=$(osc get pod -n project$i |grep $build_config| grep -v sti-build|awk '{print $1}')
-      str2=$(osc log $pod -n project$i |sed -n '$p'|grep start)
+      pod=$(osc get pod -n project$i |grep $frontend_name |grep -v hook |awk '{print $1}')
+      str2=$(osc logs $pod -n project$i |sed -n '$p'|grep start)
   
       if [ -z "$str2" ]
       then
@@ -39,8 +43,8 @@ date_process()
         fail="true"
       else
 
-        time3=$(osc log $pod -n project$i |sed -n '$p'|awk '{print $1}')
-        time3=$(date +%s -d $time3)
+        time3=$(osc logs $pod -n project$i |sed -n '$p'|awk '{print $1,$2}' |cut -c 2-20)
+        time3=$(date +%s -d "$time3")
         
         d_time=$(($time3-$time2))
 
@@ -90,38 +94,28 @@ clean_projects()
   echo "All projects cleaned up!!!"
 }
 
-clean_images()
-{
-  for i in `seq 1 $num`
-  do
-    list=$(docker images|grep project$i|awk '{print $2}')
-    for id in $list
-    do
-      docker rmi -f $id
-    done
-  done
-  
-  echo "All images cleaned up!!!"
-}
 
-create_app()
+pre_create()
 {
 
 for i in `seq 1 $num`
 do
   osadm new-project project$i --admin=test$i
-  su - test$i -c "osc new-app $image_source  -n project$i"
+  cp -f $tem_file /home/test$i/
+
+  su - test$i -c "osc create -f $tem_file -n project$i"
+
 done
 
 echo "$num $build_config app created."
 
 }
 
-trigger_build()
+app_create()
 {
   for i in `seq 1 $num`
   do
-    su - test$i -c "osc start-build $build_config -n project$i"  &
+    su - test$i -c "osc new-app --template=$template -n project$i" &
   done
 }
 
@@ -172,8 +166,8 @@ pod_check()
 
     for i in `seq 1 $num`
     do
-      status=$( osc get pod -n project$i|grep $build_config |grep -v sti-build |grep -v ose-deployer|awk '{print $7}')
-
+      status=$( osc get pod -n project$i|grep $frontend_name |grep -v hook|awk '{print $5}')
+      noready=$( osc get pod -n project$i |grep "not ready" )
 
       if [ $status = "Running" ]
       then
@@ -188,8 +182,16 @@ pod_check()
     
     if [ $r_pod -eq $num ]
     then
-      echo "All $num pod are finished now!"
-      break
+ 
+      if [ -z "$noready" ]
+      then
+         echo "All $num pod are running now!"
+         break
+      else
+         echo "some pod still not ready..."
+         sleep 5
+      fi
+
     else
       echo "Some pods still not get running..."
       sleep 5
@@ -209,12 +211,12 @@ for num in 3 ; do
   echo $num >> test_cal
   echo "Creating $num app"
 
-  create_app
+  pre_create
 
   echo "waiting for trigger build..."
   sleep 60
 
-  trigger_build
+  app_create
   sleep 300
 
   #wait for the building finished
@@ -231,7 +233,6 @@ for num in 3 ; do
     break
   else
     clean_projects
-    clean_images
   fi
  
   sleep 300
