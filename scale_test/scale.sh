@@ -80,8 +80,9 @@ date_process()
     for i in $pod_list
     do  
       time=$(osc logs $i -n project1 |sed -n '$p'|awk '{print $1,$2}' |cut -c 2-20)
-      e_time=$(date +%s -d "$time")
-  
+      e_time=$(date +%s -d "$time GMT")
+      echo "Start time of pod $i is $time $e_time" >>record/rc$num
+       
       cost_time=$(($e_time-$s_time))
   
       echo "The cost time of pod $i is:" >> record/rc$num
@@ -146,6 +147,8 @@ for num in 11 ; do
 
   scale_app
   s_time=`date +%s`
+  echo "Start scale time is `date`" >> record/rc$num
+  echo "Start scale time is $s_time" >> record/rc$num
 
   pod_check
 
@@ -157,7 +160,7 @@ for num in 11 ; do
     break
   fi
 
-#  clean_env
+  clean_env
 #  sleep 300
 done
 

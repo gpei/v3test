@@ -26,6 +26,7 @@ date_process()
       time1=$(date +%s -d $time1)
     
       time2=$(osc build-logs -n project$i $build_config-1 | sed -n '$p' |awk '{print $2}')
+      timeb=$time2
       time2=$(date +%s -d $time2)
   
       b_time=$(($time2-$time1))
@@ -44,10 +45,14 @@ date_process()
       else
 
         time3=$(osc logs $pod -n project$i |sed -n '$p'|awk '{print $1,$2}' |cut -c 2-20)
-        time3=$(date +%s -d "$time3")
         
-        d_time=$(($time3-$time2))
-
+        #time4 is timeb transfer to CST(the time zone of host), time5 is time3 transfer to CST
+        time4=$( date +%s -d "$timeb EDT")
+        time5=$( date +%s -d "$time3 GMT")
+         
+        d_time=$(($time5-$time4))
+        
+        echo "The finished time of $i project deploy is $time3"
         echo "$i deployment cost:"  >> record/build$num 
         echo "$d_time sdnoces"  >> record/build$num
       fi
@@ -206,15 +211,14 @@ pod_check()
 
 [ -d ./record ] || mkdir ./record
 
-for num in 3 ; do
+for num in 1 ; do
   echo "**********Test Result***************">> record/build$num
   echo $num >> test_cal
-  echo "Creating $num app"
 
   pre_create
 
-  echo "waiting for trigger build..."
-  sleep 60
+  echo "waiting for create apps..."
+  sleep 10
 
   app_create
   sleep 300
@@ -231,11 +235,11 @@ for num in 3 ; do
   then
     echo "There's build failed, pls check!!"
     break
-  else
+#  else
     clean_projects
   fi
  
-  sleep 300
+#  sleep 300
 done
 
 generate_avg
