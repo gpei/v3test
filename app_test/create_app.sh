@@ -77,14 +77,20 @@ get_time()
   while true
   do
     str=$( osc get pod -n project$seq |grep Running )
-  
+    noready=$( osc get pod -n project$seq |grep "not ready" ) 
+
     if [ -z "$str" ]
     then
       usleep 50
     else
-      end=$(date +%s.%N)
-      echo "The complete time of $seq app is $end" >>  record/app$num
-      break
+      if [ -z $noready ]
+      then
+        end=$(date +%s.%N)
+        echo "The complete time of $seq app is $end" >>  record/app$num
+        break
+      else
+        usleep 50
+      fi
     fi
 
   done
