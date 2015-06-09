@@ -206,7 +206,7 @@ pod_check()
 
 [ -d ./record ] || mkdir ./record
 
-for num in 5 ; do
+for num in 7 ; do
   echo "**********Test Result***************">> record/build$num
   echo $num >> test_cal
 
@@ -220,6 +220,13 @@ for num in 5 ; do
 
   #wait for the building finished
   building_check 
+
+  if [ $fail = "true" ]
+  then
+    echo "There's build failed, pls check!!"
+    break
+  fi
+
   sleep 60
   pod_check
 
