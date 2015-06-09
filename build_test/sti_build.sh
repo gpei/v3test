@@ -206,7 +206,7 @@ pod_check()
 
 [ -d ./record ] || mkdir ./record
 
-for num in 7 ; do
+for num in 11 ; do
   echo "**********Test Result***************">> record/build$num
   echo $num >> test_cal
 

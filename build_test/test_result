@@ -10,3 +10,11 @@ There's 5 sti build succeed during 5 build testing, the avg time of the 5 build 
 342
 There's 5 deployment succeed during 5 build testing, the avg time of the 5 deployment is: 
 43.6
+There's 7 sti build succeed during 7 build testing, the avg time of the 7 build is: 
+429.714
+There's 7 deployment succeed during 7 build testing, the avg time of the 7 deployment is: 
+39.1429
+There's 9 sti build succeed during 9 build testing, the avg time of the 9 build is: 
+559.222
+There's 9 deployment succeed during 9 build testing, the avg time of the 9 deployment is: 
+33.1111
