@@ -52,7 +52,7 @@ date_process()
          
         d_time=$(($time5-$time4))
         
-        echo "The finished time of $i project deploy is $time3"
+        echo "The finished time of $i project deploy is $time3" >> record/build$num
         echo "$i deployment cost:"  >> record/build$num 
         echo "$d_time sdnoces"  >> record/build$num
       fi
@@ -128,36 +128,31 @@ building_check()
 {
   while true
   do
+    r_build=0
 
     for i in `seq 1 $num`
     do
-      str2=$( osc get build -n project$i |grep -e Running -e Pending)
-      str3=$( osc get build -n project$i |grep Failed)
+      status=$( osc get build -n project$i|grep Source |awk '{print $3}')
 
-      if [ -z "$str3" ]
+      if [ $status = "Complete" ]
       then
-        fail="false"
-      else
-        fail="true"
-      fi
-
-      if [ -z "$str2" ]
+        let r_build+=1
+      elif [ $status = "Failed" ]
       then
-        flag="true"
-      else
-        flag="false"
-        break
-      fi
+        fail="true" 
+        let r_build+=1
+      fi 
+    
+     done
 
-    done
 
-    if [ $flag = "true" ]
+    if [ $r_build -eq $num ]
     then
-      echo "All building finished."
+      echo "All $num build are finished now!"
       break
     else
-      echo "Still have building running..."
-      sleep 10
+      echo "some build still not finished..."
+      sleep 5
     fi
 
   done
@@ -211,7 +206,7 @@ pod_check()
 
 [ -d ./record ] || mkdir ./record
 
-for num in 1 ; do
+for num in 5 ; do
   echo "**********Test Result***************">> record/build$num
   echo $num >> test_cal
 
@@ -235,7 +230,7 @@ for num in 1 ; do
   then
     echo "There's build failed, pls check!!"
     break
-#  else
+  else
     clean_projects
   fi
  
