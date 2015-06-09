@@ -129,7 +129,7 @@ generate_avg()
 
 [ -d ./record ] || mkdir ./record
 
-for num in 11 ; do
+for num in 41 ; do
   echo "**********Test Result***************">> record/rc$num
   echo $num >> test_cal
 
@@ -149,8 +149,12 @@ for num in 11 ; do
   s_time=`date +%s`
   echo "Start scale time is `date`" >> record/rc$num
   echo "Start scale time is $s_time" >> record/rc$num
-
+  
+  sleep 30
+  
   pod_check
+
+  sleep 10
 
   date_process
   

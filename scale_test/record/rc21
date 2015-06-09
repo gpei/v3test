@@ -1,0 +1,63 @@
+**********Test Result***************
+Start scale time is Tue Jun  9 17:55:27 CST 2015
+Start scale time is 1433843727
+Start time of pod frontend-1-3rc3b is 2015-06-09 09:55:58 1433843758
+The cost time of pod frontend-1-3rc3b is:
+31 seconds
+Start time of pod frontend-1-7madj is 2015-06-09 09:55:44 1433843746
+The cost time of pod frontend-1-7madj is:
+17 seconds
+Start time of pod frontend-1-7t3ry is 2015-06-09 09:56:05 1433843765
+The cost time of pod frontend-1-7t3ry is:
+38 seconds
+Start time of pod frontend-1-7y8eo is 2015-06-09 09:55:46 1433843746
+The cost time of pod frontend-1-7y8eo is:
+19 seconds
+Start time of pod frontend-1-962al is 2015-06-09 09:55:42 1433843742
+The cost time of pod frontend-1-962al is:
+15 seconds
+Start time of pod frontend-1-dkfkd is 2015-06-09 09:55:54 1433843754
+The cost time of pod frontend-1-dkfkd is:
+27 seconds
+Start time of pod frontend-1-ds4eb is 2015-06-09 09:56:05 1433843765
+The cost time of pod frontend-1-ds4eb is:
+38 seconds
+Start time of pod frontend-1-dy0h2 is 2015-06-09 09:55:46 1433843746
+The cost time of pod frontend-1-dy0h2 is:
+19 seconds
+Start time of pod frontend-1-ez6zt is 2015-06-09 09:55:41 1433843741
+The cost time of pod frontend-1-ez6zt is:
+14 seconds
+Start time of pod frontend-1-f0h3p is 2015-06-09 09:55:54 1433843754
+The cost time of pod frontend-1-f0h3p is:
+27 seconds
+Start time of pod frontend-1-ghl6d is 2015-06-09 09:55:49 1433843749
+The cost time of pod frontend-1-ghl6d is:
+22 seconds
+Start time of pod frontend-1-hexx2 is 2015-06-09 09:55:57 1433843757
+The cost time of pod frontend-1-hexx2 is:
+30 seconds
+Start time of pod frontend-1-hx979 is 2015-06-09 09:55:42 1433843742
+The cost time of pod frontend-1-hx979 is:
+15 seconds
+Start time of pod frontend-1-kvg1l is 2015-06-09 09:55:54 1433843754
+The cost time of pod frontend-1-kvg1l is:
+27 seconds
+Start time of pod frontend-1-nty4h is 2015-06-09 09:55:36 1433843736
+The cost time of pod frontend-1-nty4h is:
+9 seconds
+Start time of pod frontend-1-p7806 is 2015-06-09 09:55:45 1433843745
+The cost time of pod frontend-1-p7806 is:
+18 seconds
+Start time of pod frontend-1-pyw70 is 2015-06-09 09:55:35 1433843735
+The cost time of pod frontend-1-pyw70 is:
+8 seconds
+Start time of pod frontend-1-t2iuj is 2015-06-09 09:56:00 1433843760
+The cost time of pod frontend-1-t2iuj is:
+33 seconds
+Start time of pod frontend-1-vycb2 is 2015-06-09 09:55:37 1433843737
+The cost time of pod frontend-1-vycb2 is:
+10 seconds
+Start time of pod frontend-1-ya5fn is 2015-06-09 09:55:37 1433843737
+The cost time of pod frontend-1-ya5fn is:
+10 seconds
