@@ -108,7 +108,8 @@ do
   osadm new-project project$i --admin=test$i
   cp -f $tem_file /home/test$i/
 
-  su - test$i -c "osc create -f $tem_file -n project$i"
+#  su - test$i -c "osc create -f $tem_file -n project$i"
+  osc create -f $tem_file -n project$i
 
 done
 
@@ -120,7 +121,8 @@ app_create()
 {
   for i in `seq 1 $num`
   do
-    su - test$i -c "osc new-app --template=$template -n project$i" &
+#    su - test$i -c "osc new-app --template=$template -n project$i" &
+    osc new-app --template=$template -n project$i" &
   done
 }
 

@@ -129,14 +129,16 @@ generate_avg()
 
 [ -d ./record ] || mkdir ./record
 
-for num in 41 ; do
+for num in 101 ; do
   echo "**********Test Result***************">> record/rc$num
   echo $num >> test_cal
 
   osadm new-project project1 --admin=test1
   cp -f $tem_file /home/test1/
-  su - test1 -c "osc create -f $tem_file -n project1"
-  su - test1 -c "osc new-app --template=$template -n project1"
+#  su - test1 -c "osc create -f $tem_file -n project1"
+  osc create -f $tem_file -n project1
+#  su - test1 -c "osc new-app --template=$template -n project1"
+  osc new-app --template=$template -n project1
 #  su - test1 -c "osc start-build $build_config -n project1"
   sleep 300
   build_check 
@@ -163,6 +165,8 @@ for num in 41 ; do
     echo "There's pod failed to get running, pls check !!!!!!!"
     break
   fi
+
+  sleep 60
 
   clean_env
 #  sleep 300
