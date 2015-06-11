@@ -46,7 +46,7 @@ done
 
 [ -d ./record ] || mkdir ./record
 
-for num in 5 10 15 20 25 30 35 40 45 50; do
+for num in 115 ; do
   echo "**********Test Result***************">> record/project$num
   echo $num >> test_cal
   echo "Ready for creating $num projects"
@@ -54,7 +54,7 @@ for num in 5 10 15 20 25 30 35 40 45 50; do
   echo "Wait for projects created..."
   sleep 300
   clean_projects
-  sleep 60
+  sleep 300
 done
 
 generate_avg
