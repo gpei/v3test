@@ -48,6 +48,8 @@ date_process()
         
         #time4 is timeb transfer to CST(the time zone of host), time5 is time3 transfer to CST
         time4=$( date +%s -d "$timeb EDT")
+        #delay time4 for one day before 12:00 at noon
+       # time4=$(($time4-86400))
         time5=$( date +%s -d "$time3 GMT")
          
         d_time=$(($time5-$time4))
@@ -122,7 +124,7 @@ app_create()
   for i in `seq 1 $num`
   do
 #    su - test$i -c "osc new-app --template=$template -n project$i" &
-    osc new-app --template=$template -n project$i" &
+    osc new-app --template=$template -n project$i &
   done
 }
 
@@ -208,7 +210,7 @@ pod_check()
 
 [ -d ./record ] || mkdir ./record
 
-for num in 11 ; do
+for num in 17 ; do
   echo "**********Test Result***************">> record/build$num
   echo $num >> test_cal
 
@@ -243,7 +245,12 @@ for num in 11 ; do
     clean_projects
   fi
  
-#  sleep 300
+  sleep 300
+
+  sh ../tools/clean.sh
+
+  sleep 300
+
 done
 
 generate_avg
