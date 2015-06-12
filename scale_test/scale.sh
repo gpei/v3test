@@ -11,12 +11,12 @@ fail="false"
 scale_app()
 {
   
-  # for beta4, we could use osc resize/scale cmd
-   osc resize --replicas=$num replicationcontrollers $rc_name -n project1
+  # for beta4, we could use oc resize/scale cmd
+   oc resize --replicas=$num replicationcontrollers $rc_name -n project1
 
-#  osc get rc -o json -n project1 > rc.json
+#  oc get rc -o json -n project1 > rc.json
 #  sed -i '0,/\"replicas\"\:\ 1/s//\"replicas\"\:\ '$num'/' rc.json
-#  osc update -f rc.json -n project1
+#  oc update -f rc.json -n project1
 }
 
 build_check()
@@ -24,7 +24,7 @@ build_check()
   while true
   do
     
-    str1=$( osc get build -n project1 |grep Complete)
+    str1=$( oc get build -n project1 |grep Complete)
     
     if [ -z "$str1" ]
     then
@@ -43,9 +43,9 @@ pod_check()
   while true
   do
 
-    r_pod=$(osc get pod -n project1 |grep $frontend_name |grep -v hook|grep Running|wc -l )
-    str=$(osc get pod -n project1 |grep $frontend_name |grep -v hook| grep -i Failed)
-    noready=$(osc get pod -n project1 |grep "not ready")
+    r_pod=$(oc get pod -n project1 |grep $frontend_name |grep -v hook|grep Running|wc -l )
+    str=$(oc get pod -n project1 |grep $frontend_name |grep -v hook| grep -i Failed)
+    noready=$(oc get pod -n project1 |grep "not ready")
 
     if [ -z "$str" ]
     then
@@ -75,11 +75,11 @@ pod_check()
 
 date_process()
 {
-    pod_list=$(osc get pod -n project1 |grep $frontend_name |grep -v hook|grep -v $origin_pod| awk '{print $1}')
+    pod_list=$(oc get pod -n project1 |grep $frontend_name |grep -v hook|grep -v $origin_pod| awk '{print $1}')
 
     for i in $pod_list
     do  
-      time=$(osc logs $i -n project1 |sed -n '$p'|awk '{print $1,$2}' |cut -c 2-20)
+      time=$(oc logs $i -n project1 |sed -n '$p'|awk '{print $1,$2}' |cut -c 2-20)
       e_time=$(date +%s -d "$time GMT")
       echo "Start time of pod $i is $time $e_time" >>record/rc$num
        
@@ -93,12 +93,12 @@ date_process()
 
 clean_env()
 {
-  osc delete project project1
+  oc delete project project1
   
   while true
   do
     sleep 10
-    str1=$( osc get project |grep Terminating)
+    str1=$( oc get project |grep Terminating)
 
     if [ -z "$str1" ]
     then
@@ -135,15 +135,15 @@ for num in 101 ; do
 
   osadm new-project project1 --admin=test1
   cp -f $tem_file /home/test1/
-#  su - test1 -c "osc create -f $tem_file -n project1"
-  osc create -f $tem_file -n project1
-#  su - test1 -c "osc new-app --template=$template -n project1"
-  osc new-app --template=$template -n project1
-#  su - test1 -c "osc start-build $build_config -n project1"
+#  su - test1 -c "oc create -f $tem_file -n project1"
+  oc create -f $tem_file -n project1
+#  su - test1 -c "oc new-app --template=$template -n project1"
+  oc new-app --template=$template -n project1
+#  su - test1 -c "oc start-build $build_config -n project1"
   sleep 300
   build_check 
 
-  origin_pod=$(osc get pod -n project1 |grep $frontend_name |grep -v hook |awk '{print $1}')
+  origin_pod=$(oc get pod -n project1 |grep $frontend_name |grep -v hook |awk '{print $1}')
 
   echo "Ready to scale the app to $num pod"
 

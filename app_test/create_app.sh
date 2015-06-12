@@ -6,13 +6,13 @@ clean_env()
 {
   for i in `seq 1 $num`
   do
-    osc delete project project$i
+    oc delete project project$i
   done
 
   while true
   do
     sleep 10
-    str1=$( osc get project |grep Terminating)
+    str1=$( oc get project |grep Terminating)
 
     if [ -z "$str1" ]
     then
@@ -58,7 +58,7 @@ app_create()
 
   for i in `seq 1 $num`
   do
-    su - test$i -c "osc create -f $app_json_file -n project$i"  &
+    su - test$i -c "oc create -f $app_json_file -n project$i"  &
   done
   
   sleep 1
@@ -76,8 +76,8 @@ get_time()
 
   while true
   do
-    str=$( osc get pod -n project$seq |grep Running )
-    noready=$( osc get pod -n project$seq |grep "not ready" ) 
+    str=$( oc get pod -n project$seq |grep Running )
+    noready=$( oc get pod -n project$seq |grep "not ready" ) 
 
     if [ -z "$str" ]
     then

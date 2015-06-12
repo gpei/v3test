@@ -12,13 +12,13 @@ clean_projects()
 {
   for i in `seq 1 $num`
   do
-    osc delete project project$i 
+    oc delete project project$i 
   done
 
   while true
   do
     sleep 10
-    str1=$( osc get project |grep Terminating)
+    str1=$( oc get project |grep Terminating)
 
     if [ -z "$str1" ]
     then

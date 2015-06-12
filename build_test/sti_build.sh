@@ -12,7 +12,7 @@ date_process()
 {
   for i in `seq 1 $num`
   do
-    str1=$(osc build-logs -n project$i $build_config-1 | sed -n '$p' |grep "Successfully pushed")
+    str1=$(oc build-logs -n project$i $build_config-1 | sed -n '$p' |grep "Successfully pushed")
 
     #check whether the sti build is success, if failed, pass the time process part
     if [ -z "$str1" ]
@@ -22,10 +22,10 @@ date_process()
     else
       
       #get the start time and end time of sti build from build log of each build
-      time1=$(osc build-logs -n project$i $build_config-1 | sed -n '1p' |awk '{print $2}')   
+      time1=$(oc build-logs -n project$i $build_config-1 | sed -n '1p' |awk '{print $2}')   
       time1=$(date +%s -d $time1)
     
-      time2=$(osc build-logs -n project$i $build_config-1 | sed -n '$p' |awk '{print $2}')
+      time2=$(oc build-logs -n project$i $build_config-1 | sed -n '$p' |awk '{print $2}')
       timeb=$time2
       time2=$(date +%s -d $time2)
   
@@ -35,8 +35,8 @@ date_process()
       echo "$b_time seconds"  >> record/build$num
        
       #check whether the deployment is success
-      pod=$(osc get pod -n project$i |grep $frontend_name |grep -v hook |awk '{print $1}')
-      str2=$(osc logs $pod -n project$i |sed -n '$p'|grep start)
+      pod=$(oc get pod -n project$i |grep $frontend_name |grep -v hook |awk '{print $1}')
+      str2=$(oc logs $pod -n project$i |sed -n '$p'|grep start)
   
       if [ -z "$str2" ]
       then
@@ -44,7 +44,7 @@ date_process()
         fail="true"
       else
 
-        time3=$(osc logs $pod -n project$i |sed -n '$p'|awk '{print $1,$2}' |cut -c 2-20)
+        time3=$(oc logs $pod -n project$i |sed -n '$p'|awk '{print $1,$2}' |cut -c 2-20)
         
         #time4 is timeb transfer to CST(the time zone of host), time5 is time3 transfer to CST
         time4=$( date +%s -d "$timeb EDT")
@@ -81,13 +81,13 @@ clean_projects()
 {
   for i in `seq 1 $num`
   do
-    osc delete project project$i
+    oc delete project project$i
   done
 
   while true
   do
     sleep 10
-    str1=$( osc get project |grep Terminating)
+    str1=$( oc get project |grep Terminating)
 
     if [ -z "$str1" ]
     then
@@ -110,8 +110,8 @@ do
   osadm new-project project$i --admin=test$i
   cp -f $tem_file /home/test$i/
 
-#  su - test$i -c "osc create -f $tem_file -n project$i"
-  osc create -f $tem_file -n project$i
+#  su - test$i -c "oc create -f $tem_file -n project$i"
+  oc create -f $tem_file -n project$i
 
 done
 
@@ -123,8 +123,8 @@ app_create()
 {
   for i in `seq 1 $num`
   do
-#    su - test$i -c "osc new-app --template=$template -n project$i" &
-    osc new-app --template=$template -n project$i &
+#    su - test$i -c "oc new-app --template=$template -n project$i" &
+    oc new-app --template=$template -n project$i &
   done
 }
 
@@ -136,7 +136,7 @@ building_check()
 
     for i in `seq 1 $num`
     do
-      status=$( osc get build -n project$i|grep Source |awk '{print $3}')
+      status=$( oc get build -n project$i|grep Source |awk '{print $3}')
 
       if [ $status = "Complete" ]
       then
@@ -170,8 +170,8 @@ pod_check()
 
     for i in `seq 1 $num`
     do
-      status=$( osc get pod -n project$i|grep $frontend_name |grep -v hook|awk '{print $5}')
-      noready=$( osc get pod -n project$i |grep "not ready" )
+      status=$( oc get pod -n project$i|grep $frontend_name |grep -v hook|awk '{print $5}')
+      noready=$( oc get pod -n project$i |grep "not ready" )
 
       if [ $status = "Running" ]
       then
@@ -206,7 +206,7 @@ pod_check()
 
 
 #generate is for openshift project
-#osc create -f image-streams.json -n openshift
+#oc create -f image-streams.json -n openshift
 
 [ -d ./record ] || mkdir ./record
 

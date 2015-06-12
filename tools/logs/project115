@@ -6334,7 +6334,7 @@ root        91  0.0  0.0      0     0 ?        S    Jun09   0:00 [kauditd]
 USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
 root      8831  5.2 27.6 1775672 1072084 ?     Ssl  Jun09 163:46 /usr/bin/openshift start master --config=/etc/openshift/master/master-config.yaml --loglevel=4
 root       452  0.4  0.5  72528 22376 ?        Ss   Jun09  14:57 /usr/lib/systemd/systemd-journald
-root     24579  0.0  0.5 231108 20084 pts/0    Rl+  18:07   0:00 osc delete project project2
+root     24579  0.0  0.5 231108 20084 pts/0    Rl+  18:07   0:00 oc delete project project2
 root       593  0.0  0.4 550168 16228 ?        Ssl  Jun09   0:21 /usr/bin/python -Es /usr/sbin/tuned -l -P
 root       902  0.0  0.3 301856 14832 ?        Ssl  Jun09   0:22 /usr/bin/docker -d --selinux-enabled --insecure-registry 0.0.0.0/0
 
@@ -6360,7 +6360,7 @@ root        91  0.0  0.0      0     0 ?        S    Jun09   0:00 [kauditd]
 USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
 root      8831  5.2 27.6 1775672 1072084 ?     Ssl  Jun09 163:46 /usr/bin/openshift start master --config=/etc/openshift/master/master-config.yaml --loglevel=4
 root       452  0.4  0.5  72528 22376 ?        Ss   Jun09  14:57 /usr/lib/systemd/systemd-journald
-root     24599  0.0  0.5 304840 21364 pts/0    Rl+  18:07   0:00 osc delete project project3
+root     24599  0.0  0.5 304840 21364 pts/0    Rl+  18:07   0:00 oc delete project project3
 root       593  0.0  0.4 550168 16228 ?        Ssl  Jun09   0:21 /usr/bin/python -Es /usr/sbin/tuned -l -P
 root       902  0.0  0.3 301856 14832 ?        Ssl  Jun09   0:22 /usr/bin/docker -d --selinux-enabled --insecure-registry 0.0.0.0/0
 
@@ -6386,7 +6386,7 @@ root        91  0.0  0.0      0     0 ?        S    Jun09   0:00 [kauditd]
 USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
 root      8831  5.2 27.6 1775672 1072084 ?     Ssl  Jun09 163:46 /usr/bin/openshift start master --config=/etc/openshift/master/master-config.yaml --loglevel=4
 root       452  0.4  0.5  72528 22380 ?        Ss   Jun09  14:57 /usr/lib/systemd/systemd-journald
-root     24619  0.0  0.5 239304 21556 pts/0    Sl+  18:07   0:00 osc delete project project4
+root     24619  0.0  0.5 239304 21556 pts/0    Sl+  18:07   0:00 oc delete project project4
 root       593  0.0  0.4 550168 16228 ?        Ssl  Jun09   0:21 /usr/bin/python -Es /usr/sbin/tuned -l -P
 root       902  0.0  0.3 301856 14832 ?        Ssl  Jun09   0:22 /usr/bin/docker -d --selinux-enabled --insecure-registry 0.0.0.0/0
 
@@ -6413,7 +6413,7 @@ USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
 root      8831  5.2 27.6 1775672 1072084 ?     Ssl  Jun09 163:46 /usr/bin/openshift start master --config=/etc/openshift/master/master-config.yaml --loglevel=4
 root       452  0.4  0.5  72528 22380 ?        Ss   Jun09  14:57 /usr/lib/systemd/systemd-journald
 root       593  0.0  0.4 550168 16228 ?        Ssl  Jun09   0:21 /usr/bin/python -Es /usr/sbin/tuned -l -P
-root     24645  0.0  0.4 231108 19308 pts/0    Rl+  18:07   0:00 osc delete project project6
+root     24645  0.0  0.4 231108 19308 pts/0    Rl+  18:07   0:00 oc delete project project6
 root       902  0.0  0.3 301856 14832 ?        Ssl  Jun09   0:22 /usr/bin/docker -d --selinux-enabled --insecure-registry 0.0.0.0/0
 
 ***** System process status record *****
@@ -6438,7 +6438,7 @@ root        91  0.0  0.0      0     0 ?        S    Jun09   0:00 [kauditd]
 USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
 root      8831  5.2 27.6 1775672 1072084 ?     Rsl  Jun09 163:46 /usr/bin/openshift start master --config=/etc/openshift/master/master-config.yaml --loglevel=4
 root       452  0.4  0.5  72528 22384 ?        Ss   Jun09  14:57 /usr/lib/systemd/systemd-journald
-root     24665  0.0  0.5 231108 20856 pts/0    Rl+  18:07   0:00 osc delete project project7
+root     24665  0.0  0.5 231108 20856 pts/0    Rl+  18:07   0:00 oc delete project project7
 root       593  0.0  0.4 550168 16228 ?        Ssl  Jun09   0:21 /usr/bin/python -Es /usr/sbin/tuned -l -P
 root       902  0.0  0.3 301856 14832 ?        Ssl  Jun09   0:22 /usr/bin/docker -d --selinux-enabled --insecure-registry 0.0.0.0/0
 
@@ -6453,7 +6453,7 @@ usr sys idl wai hiq siq| recv  send| used  buff  cach  free| read  writ| 1m   5m
 
 ****** Cpu consume top 5: ******
 USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
-root     24685 10.0  0.5 231108 19584 pts/0    Rl+  18:07   0:00 osc delete project project8
+root     24685 10.0  0.5 231108 19584 pts/0    Rl+  18:07   0:00 oc delete project project8
 root      8831  5.2 27.6 1775672 1072084 ?     Ssl  Jun09 163:46 /usr/bin/openshift start master --config=/etc/openshift/master/master-config.yaml --loglevel=4
 root       452  0.4  0.5  72528 22392 ?        Ss   Jun09  14:57 /usr/lib/systemd/systemd-journald
 root     21044  0.2  0.0 113120  1444 pts/1    S+   18:02   0:00 /bin/bash ./sys_monitor.sh
@@ -6464,7 +6464,7 @@ USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
 USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
 root      8831  5.2 27.6 1775672 1072084 ?     Ssl  Jun09 163:46 /usr/bin/openshift start master --config=/etc/openshift/master/master-config.yaml --loglevel=4
 root       452  0.4  0.5  72528 22392 ?        Ss   Jun09  14:57 /usr/lib/systemd/systemd-journald
-root     24685 13.0  0.5 231108 19844 pts/0    Rl+  18:07   0:00 osc delete project project8
+root     24685 13.0  0.5 231108 19844 pts/0    Rl+  18:07   0:00 oc delete project project8
 root       593  0.0  0.4 550168 16228 ?        Ssl  Jun09   0:21 /usr/bin/python -Es /usr/sbin/tuned -l -P
 root       902  0.0  0.3 301856 14832 ?        Ssl  Jun09   0:22 /usr/bin/docker -d --selinux-enabled --insecure-registry 0.0.0.0/0
 
@@ -6479,7 +6479,7 @@ usr sys idl wai hiq siq| recv  send| used  buff  cach  free| read  writ| 1m   5m
 
 ****** Cpu consume top 5: ******
 USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
-root     24685 26.0  0.5 239304 21396 pts/0    Sl+  18:07   0:00 osc delete project project8
+root     24685 26.0  0.5 239304 21396 pts/0    Sl+  18:07   0:00 oc delete project project8
 root      8831  5.2 27.6 1775672 1072084 ?     Ssl  Jun09 163:46 /usr/bin/openshift start master --config=/etc/openshift/master/master-config.yaml --loglevel=4
 root       452  0.4  0.5  72528 22396 ?        Ss   Jun09  14:57 /usr/lib/systemd/systemd-journald
 root     21044  0.2  0.0 113120  1444 pts/1    S+   18:02   0:00 /bin/bash ./sys_monitor.sh
@@ -6490,7 +6490,7 @@ USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
 USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
 root      8831  5.2 27.6 1775672 1072084 ?     Ssl  Jun09 163:46 /usr/bin/openshift start master --config=/etc/openshift/master/master-config.yaml --loglevel=4
 root       452  0.4  0.5  72528 22396 ?        Ss   Jun09  14:57 /usr/lib/systemd/systemd-journald
-root     24685 26.0  0.5 239304 21396 pts/0    Sl+  18:07   0:00 osc delete project project8
+root     24685 26.0  0.5 239304 21396 pts/0    Sl+  18:07   0:00 oc delete project project8
 root       593  0.0  0.4 550168 16228 ?        Ssl  Jun09   0:21 /usr/bin/python -Es /usr/sbin/tuned -l -P
 root       902  0.0  0.3 301856 14832 ?        Ssl  Jun09   0:22 /usr/bin/docker -d --selinux-enabled --insecure-registry 0.0.0.0/0
 
@@ -6505,7 +6505,7 @@ usr sys idl wai hiq siq| recv  send| used  buff  cach  free| read  writ| 1m   5m
 
 ****** Cpu consume top 5: ******
 USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
-root     24719 48.0  0.5 370376 21252 pts/0    Sl+  18:07   0:00 osc delete project project9
+root     24719 48.0  0.5 370376 21252 pts/0    Sl+  18:07   0:00 oc delete project project9
 root      8831  5.2 27.6 1775672 1072084 ?     Ssl  Jun09 163:46 /usr/bin/openshift start master --config=/etc/openshift/master/master-config.yaml --loglevel=4
 root       452  0.4  0.5  72528 22408 ?        Ss   Jun09  14:57 /usr/lib/systemd/systemd-journald
 root     21044  0.2  0.0 113120  1448 pts/1    S+   18:02   0:00 /bin/bash ./sys_monitor.sh
@@ -6516,7 +6516,7 @@ USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
 USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
 root      8831  5.2 27.6 1775672 1072084 ?     Ssl  Jun09 163:46 /usr/bin/openshift start master --config=/etc/openshift/master/master-config.yaml --loglevel=4
 root       452  0.4  0.5  72528 22408 ?        Ss   Jun09  14:57 /usr/lib/systemd/systemd-journald
-root     24719 48.0  0.5 370376 21252 pts/0    Sl+  18:07   0:00 osc delete project project9
+root     24719 48.0  0.5 370376 21252 pts/0    Sl+  18:07   0:00 oc delete project project9
 root       593  0.0  0.4 550168 16228 ?        Ssl  Jun09   0:21 /usr/bin/python -Es /usr/sbin/tuned -l -P
 root       902  0.0  0.3 301856 14832 ?        Ssl  Jun09   0:22 /usr/bin/docker -d --selinux-enabled --insecure-registry 0.0.0.0/0
 
@@ -6531,7 +6531,7 @@ usr sys idl wai hiq siq| recv  send| used  buff  cach  free| read  writ| 1m   5m
 
 ****** Cpu consume top 5: ******
 USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
-root     24739 47.0  0.5 239304 21364 pts/0    Rl+  18:07   0:00 osc delete project project10
+root     24739 47.0  0.5 239304 21364 pts/0    Rl+  18:07   0:00 oc delete project project10
 root      8831  5.2 27.6 1775672 1072084 ?     Ssl  Jun09 163:47 /usr/bin/openshift start master --config=/etc/openshift/master/master-config.yaml --loglevel=4
 root       452  0.4  0.5  72528 22420 ?        Ss   Jun09  14:57 /usr/lib/systemd/systemd-journald
 root     21044  0.2  0.0 113120  1448 pts/1    S+   18:02   0:00 /bin/bash ./sys_monitor.sh
@@ -6542,7 +6542,7 @@ USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
 USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
 root      8831  5.2 27.6 1775672 1072084 ?     Ssl  Jun09 163:47 /usr/bin/openshift start master --config=/etc/openshift/master/master-config.yaml --loglevel=4
 root       452  0.4  0.5  72528 22420 ?        Ss   Jun09  14:57 /usr/lib/systemd/systemd-journald
-root     24739 48.0  0.5 239304 21364 pts/0    Sl+  18:07   0:00 osc delete project project10
+root     24739 48.0  0.5 239304 21364 pts/0    Sl+  18:07   0:00 oc delete project project10
 root       593  0.0  0.4 550168 16228 ?        Ssl  Jun09   0:21 /usr/bin/python -Es /usr/sbin/tuned -l -P
 root       902  0.0  0.3 301856 14832 ?        Ssl  Jun09   0:22 /usr/bin/docker -d --selinux-enabled --insecure-registry 0.0.0.0/0
 
@@ -6557,7 +6557,7 @@ usr sys idl wai hiq siq| recv  send| used  buff  cach  free| read  writ| 1m   5m
 
 ****** Cpu consume top 5: ******
 USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
-root     24759 48.0  0.5 304840 21328 pts/0    Sl+  18:07   0:00 osc delete project project11
+root     24759 48.0  0.5 304840 21328 pts/0    Sl+  18:07   0:00 oc delete project project11
 root      8831  5.2 27.6 1775672 1072084 ?     Ssl  Jun09 163:47 /usr/bin/openshift start master --config=/etc/openshift/master/master-config.yaml --loglevel=4
 root       452  0.4  0.5  72528 22432 ?        Ss   Jun09  14:57 /usr/lib/systemd/systemd-journald
 root     21044  0.2  0.0 113120  1448 pts/1    S+   18:02   0:00 /bin/bash ./sys_monitor.sh
@@ -6594,7 +6594,7 @@ root        91  0.0  0.0      0     0 ?        S    Jun09   0:00 [kauditd]
 USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
 root      8831  5.2 27.6 1775672 1072084 ?     Dsl  Jun09 163:47 /usr/bin/openshift start master --config=/etc/openshift/master/master-config.yaml --loglevel=4
 root       452  0.4  0.5  72528 22440 ?        Rs   Jun09  14:57 /usr/lib/systemd/systemd-journald
-root     24785  0.0  0.5 231108 20628 pts/0    Rl+  18:07   0:00 osc delete project project13
+root     24785  0.0  0.5 231108 20628 pts/0    Rl+  18:07   0:00 oc delete project project13
 root       593  0.0  0.4 550168 16228 ?        Ssl  Jun09   0:21 /usr/bin/python -Es /usr/sbin/tuned -l -P
 root       902  0.0  0.3 301856 14832 ?        Ssl  Jun09   0:22 /usr/bin/docker -d --selinux-enabled --insecure-registry 0.0.0.0/0
 
@@ -6619,7 +6619,7 @@ root        91  0.0  0.0      0     0 ?        S    Jun09   0:00 [kauditd]
 
 USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
 root      8831  5.2 27.6 1775672 1072084 ?     Ssl  Jun09 163:47 /usr/bin/openshift start master --config=/etc/openshift/master/master-config.yaml --loglevel=4
-root     24805  0.0  0.6 304840 23432 pts/0    Sl+  18:07   0:00 osc delete project project14
+root     24805  0.0  0.6 304840 23432 pts/0    Sl+  18:07   0:00 oc delete project project14
 root       452  0.4  0.5  72528 22460 ?        Ss   Jun09  14:57 /usr/lib/systemd/systemd-journald
 root       593  0.0  0.4 550168 16228 ?        Ssl  Jun09   0:21 /usr/bin/python -Es /usr/sbin/tuned -l -P
 root       902  0.0  0.3 301856 14832 ?        Ssl  Jun09   0:22 /usr/bin/docker -d --selinux-enabled --insecure-registry 0.0.0.0/0
@@ -6646,7 +6646,7 @@ root        91  0.0  0.0      0     0 ?        S    Jun09   0:00 [kauditd]
 USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
 root      8831  5.2 27.6 1775672 1072084 ?     Ssl  Jun09 163:47 /usr/bin/openshift start master --config=/etc/openshift/master/master-config.yaml --loglevel=4
 root       452  0.4  0.5  72528 22468 ?        Ss   Jun09  14:57 /usr/lib/systemd/systemd-journald
-root     24831 22.0  0.5 239304 20364 pts/0    Rl+  18:07   0:00 osc delete project project16
+root     24831 22.0  0.5 239304 20364 pts/0    Rl+  18:07   0:00 oc delete project project16
 root       593  0.0  0.4 550168 16228 ?        Ssl  Jun09   0:21 /usr/bin/python -Es /usr/sbin/tuned -l -P
 root       902  0.0  0.3 301856 14832 ?        Ssl  Jun09   0:22 /usr/bin/docker -d --selinux-enabled --insecure-registry 0.0.0.0/0
 
@@ -6661,7 +6661,7 @@ usr sys idl wai hiq siq| recv  send| used  buff  cach  free| read  writ| 1m   5m
 
 ****** Cpu consume top 5: ******
 USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
-root     24851 47.0  0.6 370376 23336 pts/0    Sl+  18:07   0:00 osc delete project project17
+root     24851 47.0  0.6 370376 23336 pts/0    Sl+  18:07   0:00 oc delete project project17
 root      8831  5.2 27.6 1775672 1072084 ?     Ssl  Jun09 163:47 /usr/bin/openshift start master --config=/etc/openshift/master/master-config.yaml --loglevel=4
 root       452  0.4  0.5  72528 22492 ?        Ss   Jun09  14:57 /usr/lib/systemd/systemd-journald
 root     21044  0.1  0.0 113120  1448 pts/1    S+   18:02   0:00 /bin/bash ./sys_monitor.sh
@@ -6671,7 +6671,7 @@ USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
 
 USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
 root      8831  5.2 27.6 1775672 1072084 ?     Ssl  Jun09 163:47 /usr/bin/openshift start master --config=/etc/openshift/master/master-config.yaml --loglevel=4
-root     24851 47.0  0.6 370376 23336 pts/0    Sl+  18:07   0:00 osc delete project project17
+root     24851 47.0  0.6 370376 23336 pts/0    Sl+  18:07   0:00 oc delete project project17
 root       452  0.4  0.5  72528 22492 ?        Ss   Jun09  14:57 /usr/lib/systemd/systemd-journald
 root       593  0.0  0.4 550168 16228 ?        Ssl  Jun09   0:21 /usr/bin/python -Es /usr/sbin/tuned -l -P
 root       902  0.0  0.3 301856 14832 ?        Ssl  Jun09   0:22 /usr/bin/docker -d --selinux-enabled --insecure-registry 0.0.0.0/0
@@ -6698,7 +6698,7 @@ root        91  0.0  0.0      0     0 ?        S    Jun09   0:00 [kauditd]
 USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
 root      8831  5.2 27.6 1775672 1072084 ?     Ssl  Jun09 163:47 /usr/bin/openshift start master --config=/etc/openshift/master/master-config.yaml --loglevel=4
 root       452  0.4  0.5  72528 22504 ?        Ss   Jun09  14:57 /usr/lib/systemd/systemd-journald
-root     24877  0.0  0.5 295556 19972 pts/0    Rl+  18:07   0:00 osc delete project project19
+root     24877  0.0  0.5 295556 19972 pts/0    Rl+  18:07   0:00 oc delete project project19
 root       593  0.0  0.4 550168 16228 ?        Ssl  Jun09   0:21 /usr/bin/python -Es /usr/sbin/tuned -l -P
 root       902  0.0  0.3 301856 14832 ?        Ssl  Jun09   0:22 /usr/bin/docker -d --selinux-enabled --insecure-registry 0.0.0.0/0
 
@@ -6713,7 +6713,7 @@ usr sys idl wai hiq siq| recv  send| used  buff  cach  free| read  writ| 1m   5m
 
 ****** Cpu consume top 5: ******
 USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
-root     24897 37.0  0.5 239304 20384 pts/0    Rl+  18:07   0:00 osc delete project project20
+root     24897 37.0  0.5 239304 20384 pts/0    Rl+  18:07   0:00 oc delete project project20
 root      8831  5.2 27.6 1775672 1072084 ?     Ssl  Jun09 163:48 /usr/bin/openshift start master --config=/etc/openshift/master/master-config.yaml --loglevel=4
 root       452  0.4  0.5  72528 22516 ?        Ss   Jun09  14:57 /usr/lib/systemd/systemd-journald
 root     21044  0.2  0.0 113120  1448 pts/1    S+   18:02   0:00 /bin/bash ./sys_monitor.sh
@@ -6724,7 +6724,7 @@ USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
 USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
 root      8831  5.2 27.6 1775672 1072084 ?     Ssl  Jun09 163:48 /usr/bin/openshift start master --config=/etc/openshift/master/master-config.yaml --loglevel=4
 root       452  0.4  0.5  72528 22516 ?        Ss   Jun09  14:57 /usr/lib/systemd/systemd-journald
-root     24897 39.0  0.5 239304 20384 pts/0    Rl+  18:07   0:00 osc delete project project20
+root     24897 39.0  0.5 239304 20384 pts/0    Rl+  18:07   0:00 oc delete project project20
 root       593  0.0  0.4 550168 16228 ?        Ssl  Jun09   0:21 /usr/bin/python -Es /usr/sbin/tuned -l -P
 root       902  0.0  0.3 301856 14832 ?        Ssl  Jun09   0:22 /usr/bin/docker -d --selinux-enabled --insecure-registry 0.0.0.0/0
 
@@ -6750,7 +6750,7 @@ root        91  0.0  0.0      0     0 ?        S    Jun09   0:00 [kauditd]
 USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
 root      8831  5.2 27.6 1775672 1072084 ?     Ssl  Jun09 163:48 /usr/bin/openshift start master --config=/etc/openshift/master/master-config.yaml --loglevel=4
 root       452  0.4  0.5  72528 22528 ?        Ss   Jun09  14:57 /usr/lib/systemd/systemd-journald
-root     24917  0.0  0.5 231108 20628 pts/0    Rl+  18:07   0:00 osc delete project project21
+root     24917  0.0  0.5 231108 20628 pts/0    Rl+  18:07   0:00 oc delete project project21
 root       593  0.0  0.4 550168 16228 ?        Ssl  Jun09   0:21 /usr/bin/python -Es /usr/sbin/tuned -l -P
 root       902  0.0  0.3 301856 14832 ?        Ssl  Jun09   0:22 /usr/bin/docker -d --selinux-enabled --insecure-registry 0.0.0.0/0
 
@@ -6776,7 +6776,7 @@ root        91  0.0  0.0      0     0 ?        S    Jun09   0:00 [kauditd]
 USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
 root      8831  5.2 27.6 1775672 1072084 ?     Ssl  Jun09 163:48 /usr/bin/openshift start master --config=/etc/openshift/master/master-config.yaml --loglevel=4
 root       452  0.4  0.5  72528 22560 ?        Ss   Jun09  14:58 /usr/lib/systemd/systemd-journald
-root     24937  0.0  0.5 231108 22412 pts/0    Rl+  18:07   0:00 osc delete project project22
+root     24937  0.0  0.5 231108 22412 pts/0    Rl+  18:07   0:00 oc delete project project22
 root       593  0.0  0.4 550168 16228 ?        Ssl  Jun09   0:21 /usr/bin/python -Es /usr/sbin/tuned -l -P
 root       902  0.0  0.3 301856 14832 ?        Ssl  Jun09   0:22 /usr/bin/docker -d --selinux-enabled --insecure-registry 0.0.0.0/0
 
@@ -6802,7 +6802,7 @@ root        91  0.0  0.0      0     0 ?        S    Jun09   0:00 [kauditd]
 USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
 root      8831  5.2 27.6 1775672 1072084 ?     Ssl  Jun09 163:48 /usr/bin/openshift start master --config=/etc/openshift/master/master-config.yaml --loglevel=4
 root       452  0.4  0.5  72528 22576 ?        Ss   Jun09  14:58 /usr/lib/systemd/systemd-journald
-root     24957  0.0  0.5 231108 20620 pts/0    Rl+  18:07   0:00 osc delete project project23
+root     24957  0.0  0.5 231108 20620 pts/0    Rl+  18:07   0:00 oc delete project project23
 root       593  0.0  0.4 550168 16228 ?        Ssl  Jun09   0:21 /usr/bin/python -Es /usr/sbin/tuned -l -P
 root       902  0.0  0.3 301856 14832 ?        Ssl  Jun09   0:22 /usr/bin/docker -d --selinux-enabled --insecure-registry 0.0.0.0/0
 
