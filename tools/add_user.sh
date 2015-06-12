@@ -1,8 +1,8 @@
 #!/bin/bash
 
 master_hostname=`hostname`
-start_num=11
-end_num=20
+start_num=1
+end_num=100
 
 add_user()
 {

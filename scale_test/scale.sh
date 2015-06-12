@@ -12,7 +12,7 @@ scale_app()
 {
   
   # for beta4, we could use oc resize/scale cmd
-   oc resize --replicas=$num replicationcontrollers $rc_name -n project1
+   oc scale --replicas=$num replicationcontrollers $rc_name -n project1
 
 #  oc get rc -o json -n project1 > rc.json
 #  sed -i '0,/\"replicas\"\:\ 1/s//\"replicas\"\:\ '$num'/' rc.json
@@ -43,16 +43,16 @@ pod_check()
   while true
   do
 
-    r_pod=$(oc get pod -n project1 |grep $frontend_name |grep -v hook|grep Running|wc -l )
-    str=$(oc get pod -n project1 |grep $frontend_name |grep -v hook| grep -i Failed)
-    noready=$(oc get pod -n project1 |grep "not ready")
+    r_pod=$(oc get pod -n project1 |grep $frontend_name |grep -v deploy|grep -v hook|grep Running|wc -l )
+   # str=$(oc get pod -n project1 |grep $frontend_name |grep -v hook| grep -i Failed)
+    noready=$(oc get pod -n project$i |grep $frontend_name |grep -v deploy| grep -v hook|grep "0/1")
 
-    if [ -z "$str" ]
-    then
-      fail="false"
-    else
-      fail="true"
-    fi
+   # if [ -z "$str" ]
+   # then
+   #   fail="false"
+   # else
+   #   fail="true"
+   # fi
 
     if [ $r_pod -eq $num ]
     then
@@ -143,7 +143,7 @@ for num in 101 ; do
   sleep 300
   build_check 
 
-  origin_pod=$(oc get pod -n project1 |grep $frontend_name |grep -v hook |awk '{print $1}')
+  origin_pod=$(oc get pod -n project1 |grep $frontend_name |grep -v deploy |grep -v hook |awk '{print $1}')
 
   echo "Ready to scale the app to $num pod"
 

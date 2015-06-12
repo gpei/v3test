@@ -170,8 +170,8 @@ pod_check()
 
     for i in `seq 1 $num`
     do
-      status=$( oc get pod -n project$i|grep $frontend_name |grep -v hook|awk '{print $5}')
-      noready=$( oc get pod -n project$i |grep "not ready" )
+      status=$( oc get pod -n project$i|grep $frontend_name |grep -v deploy| grep -v hook|awk '{print $3}')
+      noready=$( oc get pod -n project$i |grep $frontend_name |grep -v deploy| grep -v hook|grep "0/1" )
 
       if [ $status = "Running" ]
       then
