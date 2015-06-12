@@ -133,7 +133,7 @@ for num in 101 ; do
   echo "**********Test Result***************">> record/rc$num
   echo $num >> test_cal
 
-  osadm new-project project1 --admin=test1
+  oadm new-project project1 --admin=test1
   cp -f $tem_file /home/test1/
 #  su - test1 -c "oc create -f $tem_file -n project1"
   oc create -f $tem_file -n project1

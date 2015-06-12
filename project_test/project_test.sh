@@ -4,7 +4,7 @@ create_project()
 {
   for i in `seq 1 $num`
   do
-    (time -p osadm new-project project$i --admin=test$i) 2>> record/project$num &
+    (time -p oadm new-project project$i --admin=test$i) 2>> record/project$num &
   done
 }
 

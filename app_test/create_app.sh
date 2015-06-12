@@ -43,7 +43,7 @@ pre_create()
 {
 for i in `seq 1 $num`
 do
-  osadm new-project project$i --admin=test$i
+  oadm new-project project$i --admin=test$i
   cp -f hello-pod.json /home/test$i/
   port=$((6000+$i ))
   sed -i 's/6061/'$port'/' /home/test$i/hello-pod.json
@@ -81,7 +81,7 @@ get_time()
 
     if [ -z "$str" ]
     then
-      usleep 50
+      usleep 100
     else
       if [ -z $noready ]
       then
@@ -89,7 +89,7 @@ get_time()
         echo "The complete time of $seq app is $end" >>  record/app$num
         break
       else
-        usleep 50
+        usleep 100
       fi
     fi
 

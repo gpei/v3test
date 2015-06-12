@@ -107,7 +107,7 @@ pre_create()
 
 for i in `seq 1 $num`
 do
-  osadm new-project project$i --admin=test$i
+  oadm new-project project$i --admin=test$i
   cp -f $tem_file /home/test$i/
 
 #  su - test$i -c "oc create -f $tem_file -n project$i"
