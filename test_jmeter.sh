@@ -17,9 +17,9 @@ get_data()
   #Average/Min/Max response time of all requests
   Average=$(cat data_tmp | awk '{sum+=$1}END{print sum/NR}')
 
-  Min=$(cat data_tmp |sort -nr | sed -n '1p')
+  Min=$(cat data_tmp |sort -n | sed -n '1p')
 
-  Max=$(cat data_tmp |sort -nr | sed -n '$p')
+  Max=$(cat data_tmp |sort -n | sed -n '$p')
 
   #Medium Line and 90% Line of all requests
   N50=$number*0.5
