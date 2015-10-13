@@ -62,7 +62,7 @@ do
   number=$(( $i * 100 ))
   appname=`echo $APP_URL | awk -F "-" '{print $1}' `
 
-  echo "Now running $number HTTP requests to App: $appname ......"
+  echo "Now running $number HTTP requests to App: $appname "
 
   run_jmeter
  
