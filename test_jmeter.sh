@@ -27,10 +27,7 @@ get_data()
   Medium=$(cat data_tmp|sort -n| awk "NR==$N50" )
   Line90=$(cat data_tmp|sort -n| awk "NR==$N90" )
 
-  echo "**************************************************************"
-  echo "Test Result for App: $appname with $number HTTP requests is : " |tee -a record/$appname-$number-result
-  echo "AVG=$Average Min=$Min Max=$Max Medium=$Medium 90%_Line=$Line90" |tee -a record/$appname-$number-result
-  echo "**************************************************************"
+  echo "Test Result for App: $appname with $number HTTP requests is : AVG=$Average Min=$Min Max=$Max Medium=$Medium 90%_Line=$Line90 " |tee -a record/$appname-$number-result
 
 }
 
@@ -65,9 +62,7 @@ do
   number=$(( $i * 100 ))
   appname=`echo $APP_URL | awk -F "-" '{print $1}' `
 
-  echo "****************************************************"
   echo "Now running $number HTTP requests to App: $appname ......"
-  echo "****************************************************"
 
   run_jmeter
  
