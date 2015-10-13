@@ -41,18 +41,22 @@ do
 done
 }
 
-#echo "Pls input the concurrent number for creating projects"
-#read num
 
 [ -d ./record ] || mkdir ./record
 
-for num in 115 ; do
+for (( num=10; num<=100; num+=10 ))
+do
   echo "**********Test Result***************">> record/project$num
   echo $num >> test_cal
+
   echo "Ready for creating $num projects"
+
   create_project 
+
   echo "Wait for projects created..."
+
   sleep 300
+
   clean_projects
   sleep 300
 done
