@@ -27,8 +27,10 @@ get_data()
   Medium=$(cat data_tmp|sort -n| awk "NR==$N50" )
   Line90=$(cat data_tmp|sort -n| awk "NR==$N90" )
 
-  echo "AVG=$Average , Min=$Min , Max=$Max , Medium=$Medium , 90%Line=$Line90" |tee -a record/$appname-$number-result
-
+  echo "**************************************************************"
+  echo "Test Result for App: $appname with $number HTTP requests is : " |tee -a record/$appname-$number-result
+  echo "AVG=$Average Min=$Min Max=$Max Medium=$Medium 90%_Line=$Line90" |tee -a record/$appname-$number-result
+  echo "**************************************************************"
 
 }
 
@@ -47,6 +49,7 @@ is_all_pass()
 copy_log()
 {
   cp jmeter.jtl record/$appname-$number-jmeter.jtl
+  cp record/$appname-$number-result /root/test_result/$appname-$number-result_`date +%s`
   #recover test.jmx and logs
   > jmeter.jtl
 }
@@ -55,18 +58,24 @@ copy_log()
 [ -d ./record ] || mkdir ./record
 
 
-for i in 1 
+for((i=1;i<=$Max_Loop_Number;i*=10))
 do
-  sed -i /LoopController.loops/s/1/$i/ test.jmx
+  sed -i /LoopController.loops/s/Loop_Number/$i/ test.jmx
+  
+  number=$(( $i * 100 ))
+  appname=`echo $APP_URL | awk -F "-" '{print $1}' `
+
+  echo "****************************************************"
+  echo "Now running $number HTTP requests to App: $appname ......"
+  echo "****************************************************"
+
   run_jmeter
  
-  number=$(cat jmeter.jtl |wc -l)
-  appname=$(grep "com.cn" test.jmx |cut -c 49-55)
 
   get_data
   is_all_pass
   copy_log
+  sed -i /LoopController.loops/s/$i/Loop_Number/ test.jmx
 
-  sed -i /LoopController.loops/s/$i/1/ test.jmx
-#  sleep 300
+  sleep 300
 done
