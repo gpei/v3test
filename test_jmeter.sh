@@ -39,7 +39,7 @@ is_all_pass()
     then
       echo "All success!" |tee -a record/$appname-$number-result
     else
-      echo "Error happened..." |tee -a record/$appname-$number-result
+      echo "Error happened!" |tee -a record/$appname-$number-result
   fi
 }
 
@@ -55,22 +55,29 @@ copy_log()
 [ -d ./record ] || mkdir ./record
 
 
-for((i=1;i<=$Max_Loop_Number;i*=10))
+for((num=1;num<=3;num++))
 do
-  sed -i /LoopController.loops/s/Loop_Number/$i/ test.jmx
+
+  echo "**********The $num round of testing********** "
+
+  for((i=1;i<=$Max_Loop_Number;i*=10))
+  do
+    sed -i /LoopController.loops/s/Loop_Number/$i/ test.jmx
   
-  number=$(( $i * 100 ))
-  appname=`echo $APP_URL | awk -F "-" '{print $1}' `
+    number=$(( $i * 100 ))
+    appname=`echo $APP_URL | awk -F "-" '{print $1}' `
 
-  echo "Now running $number HTTP requests to App: $appname "
+    echo "Now running $number HTTP requests to App: $appname "
 
-  run_jmeter
+    run_jmeter
  
 
-  get_data
-  is_all_pass
-  copy_log
-  sed -i /LoopController.loops/s/$i/Loop_Number/ test.jmx
+    get_data
+    is_all_pass
+    copy_log
+    sed -i /LoopController.loops/s/$i/Loop_Number/ test.jmx
 
-  sleep 300
+    sleep 300
+  done
+
 done
