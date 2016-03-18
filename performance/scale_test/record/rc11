@@ -1,0 +1,33 @@
+**********Test Result***************
+Start scale time is Tue Jun  9 17:25:28 CST 2015
+Start scale time is 1433841928
+Start time of pod frontend-1-29cea is 2015-06-09 09:25:36 1433841936
+The cost time of pod frontend-1-29cea is:
+8 seconds
+Start time of pod frontend-1-4hml3 is 2015-06-09 09:25:38 1433841938
+The cost time of pod frontend-1-4hml3 is:
+10 seconds
+Start time of pod frontend-1-8oyte is 2015-06-09 09:25:50 1433841950
+The cost time of pod frontend-1-8oyte is:
+22 seconds
+Start time of pod frontend-1-ajsjb is 2015-06-09 09:25:45 1433841945
+The cost time of pod frontend-1-ajsjb is:
+17 seconds
+Start time of pod frontend-1-ccd86 is 2015-06-09 09:25:40 1433841940
+The cost time of pod frontend-1-ccd86 is:
+12 seconds
+Start time of pod frontend-1-digry is 2015-06-09 09:25:45 1433841945
+The cost time of pod frontend-1-digry is:
+17 seconds
+Start time of pod frontend-1-i2ql7 is 2015-06-09 09:25:36 1433841936
+The cost time of pod frontend-1-i2ql7 is:
+8 seconds
+Start time of pod frontend-1-szzeg is 2015-06-09 09:25:44 1433841944
+The cost time of pod frontend-1-szzeg is:
+16 seconds
+Start time of pod frontend-1-u3jgf is 2015-06-09 09:25:35 1433841935
+The cost time of pod frontend-1-u3jgf is:
+7 seconds
+Start time of pod frontend-1-yqi1a is 2015-06-09 09:25:42 1433841942
+The cost time of pod frontend-1-yqi1a is:
+14 seconds
